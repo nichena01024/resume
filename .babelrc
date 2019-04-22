@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "@babel/preset-typescript",
+    "@babel/preset-react",
+    ["@babel/preset-env", {
+      "modules": false
+    }]
+  ],
+  "plugins": [
+    "@babel/proposal-class-properties",
+    ["import", { "libraryName":  "antd", "style":  "css"}]
+  ]
+}
