@@ -14,7 +14,10 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/express-http-proxy": "^1.5.2",
     "@types/node": "^11.13.7",
+    "@types/react-redux": "^7.0.8",
+    "@types/react-router": "^4.4.5",
     "css-loader": "^2.1.1",
     "isomorphic-style-loader": "^5.0.1",
     "style-loader": "^0.23.1",
@@ -24,5 +27,17 @@
     "webpack-cli": "^3.3.1",
     "webpack-merge": "^4.2.1",
     "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
+    "express-http-proxy": "^1.5.1",
+    "fastify": "^2.3.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
+    "react-router": "^5.0.0",
+    "redux": "^4.0.1",
+    "serve-static": "^1.13.2"
   }
 }
