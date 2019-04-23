@@ -28,4 +28,4 @@ const webpackConfig = {
     }
 };
 
-module.export = webpackConfig;
+module.exports = webpackConfig;
