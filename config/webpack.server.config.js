@@ -6,7 +6,7 @@ const baseConfig = require('./webpack.base.config');
 const webpackConfig = merge(baseConfig, {
         target: 'node', // node模式，直接使用require来加载模块
         mode: 'development', // TODO: 加入mode控制
-        entry: './src/server/app.ts',
+        entry: './src/server/index.ts',
         output: {
             filename: 'bundle.js',
             path: path.resolve(__dirname, 'build')
