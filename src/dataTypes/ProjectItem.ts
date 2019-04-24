@@ -1,6 +1,6 @@
-export interface ExperienceDescription {
+export interface ProjectItem {
     workplace: string,
     time: string,
-    job: string,
+    projectName: string,
     description: string | string[]
 }
