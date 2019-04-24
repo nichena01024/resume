@@ -1,36 +1,37 @@
 import * as React from 'react'
-const style = require('./style.css')
 import ContentEditable from 'react-contenteditable'
 import {cloneDeep} from 'lodash'
 
-interface ExperienceDescription {
-    workplace: string,
+const style = require('./style.css')
+
+interface IRecordListItem {
+    title: string,
     time: string,
-    job: string,
+    subTitle: string,
     description: string | string[]
 }
 
-interface IExperienceProps {
-    experience: ExperienceDescription[],
-    submitChange: (newExperience: ExperienceDescription[]) => void
+interface IRecordListProps {
+    experience: IRecordListItem[],
+    submitChange: (newExperience: IRecordListItem[]) => void
     isEnableChange?: boolean
 }
 
-interface IExperienceState {
-    currentExperience: ExperienceDescription[]
+interface IRecordListState {
+    currentExperience: IRecordListItem[]
 }
 
-export class Experience extends React.Component<IExperienceProps, IExperienceState> {
-    constructor(props: Readonly<IExperienceProps>) {
+export class RecordList extends React.Component<IRecordListProps, IRecordListState> {
+    constructor(props: Readonly<IRecordListProps>) {
         super(props)
         this.state = {
             currentExperience: props.experience
         }
     }
 
-    handleChange = <T extends ExperienceDescription, K extends keyof ExperienceDescription>(expIndex: number, key: K, value: T[K]) => {
+    handleChange = <T extends IRecordListItem, K extends keyof IRecordListItem>(expIndex: number, key: K, value: T[K]) => {
         console.log(expIndex, key, value)
-        let result = cloneDeep<ExperienceDescription[]>(this.state.currentExperience)
+        let result = cloneDeep<IRecordListItem[]>(this.state.currentExperience)
         result[expIndex][key] = value
         this.setState(() => {return {
             currentExperience: result
@@ -38,7 +39,7 @@ export class Experience extends React.Component<IExperienceProps, IExperienceSta
     }
 
     handleDescriptionItemChange = (expIndex: number, descriptionIndex: number, newDescription: string) => {
-        let result = cloneDeep<ExperienceDescription[]>(this.state.currentExperience)
+        let result = cloneDeep<IRecordListItem[]>(this.state.currentExperience)
         if(typeof result[expIndex].description === 'string') {
             throw new Error('type error')
         } else {
@@ -59,9 +60,9 @@ export class Experience extends React.Component<IExperienceProps, IExperienceSta
                     this.state.currentExperience.map((exp, expIndex) => (
                         <section key={`${expIndex}exp`} className={style.experienceItem}>
                             <header className={style.jobInfoContainer}>
-                                {this.getContentEditable(exp.workplace, expIndex, 'h2', 'workplace', this.props.isEnableChange)}
+                                {this.getContentEditable(exp.title, expIndex, 'h2', 'title', this.props.isEnableChange)}
                                 {this.getContentEditable(exp.time, expIndex, 'div', 'time', this.props.isEnableChange)}
-                                {this.getContentEditable(exp.job, expIndex, 'h3', 'job', this.props.isEnableChange)}
+                                {this.getContentEditable(exp.subTitle, expIndex, 'h3', 'subTitle', this.props.isEnableChange)}
                             </header>
                             <article className={style.descriptionContainer}>
                                 {
@@ -86,7 +87,7 @@ export class Experience extends React.Component<IExperienceProps, IExperienceSta
         )
     }
 
-    private getContentEditable = (value: string, expIndex: number, tagName: string, keyName: keyof ExperienceDescription, isEnableChange: boolean, descriptionIndex?: number) => {
+    private getContentEditable = (value: string, expIndex: number, tagName: string, keyName: keyof IRecordListItem, isEnableChange: boolean, descriptionIndex?: number) => {
         return <ContentEditable
             html={value}
             onBlur={() => this.props.submitChange(this.state.currentExperience)}
