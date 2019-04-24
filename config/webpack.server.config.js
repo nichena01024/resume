@@ -9,7 +9,7 @@ const webpackConfig = merge(baseConfig, {
         entry: './src/server/index.ts',
         output: {
             filename: 'bundle.js',
-            path: path.resolve(__dirname, 'build')
+            path: path.resolve(__dirname, '../build')
         },
         externals: [nodeExternals()],   // 除去node_modules内模块
         module: {

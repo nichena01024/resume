@@ -4,10 +4,10 @@ const baseConfig = require('./webpack.base.config');
 
 const webpackConfig = merge(baseConfig, {
     mode: 'development',    // TODO：自动更改
-    entry: './src/client/index.js',
+    entry: './src/client/index.ts',
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, '../public')
     },
     module: {
         rules: [

@@ -1,4 +1,7 @@
 const webpackConfig = {
+    resolve: {
+        extensions: ['.js', '.ts', '.tsx']
+    },
     module: {
         rules: [
             {
@@ -7,14 +10,6 @@ const webpackConfig = {
                 use: {
                     loader: "babel-loader"
                 }
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader', options: { modules: true, importLoaders: 1 } },
-                ],
-                exclude: /node_modules/
             },
             {
                 test: /\.(png|jpeg|jpg|gif|svg)?$/,
