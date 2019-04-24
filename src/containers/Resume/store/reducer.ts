@@ -25,6 +25,11 @@ export function resumeReducer(state = initState, action: ResumeActionTypes): Res
                 ...state,
                 [action.section]: action.section === 'educations' ? {} : []
             }
+        case 'CHANGE_EDITABLE_STATUS':
+            return {
+                ...state,
+                isEditable: action.status
+            }
         default:
             return state
     }
