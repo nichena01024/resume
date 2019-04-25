@@ -12,9 +12,9 @@ export interface IRecordListItem {
 }
 
 interface IRecordListProps {
-    record: IRecordListItem[],
+    data: IRecordListItem[],
     submitChange: (newRecord: IRecordListItem[]) => void
-    isEnableChange?: boolean
+    isEditable?: boolean
 }
 
 interface IRecordListState {
@@ -25,13 +25,13 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
     constructor(props: Readonly<IRecordListProps>) {
         super(props)
         this.state = {
-            currentRecord: props.record
+            currentRecord: props.data
         }
     }
 
     componentWillReceiveProps(nextProps: Readonly<IRecordListProps>, nextContext: any): void {
         this.setState({
-            currentRecord: nextProps.record
+            currentRecord: nextProps.data
         })
     }
 
@@ -65,9 +65,9 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
                     this.state.currentRecord.map((exp, expIndex) => (
                         <section key={`${expIndex}exp`} className={style.experienceItem}>
                             <header className={style.jobInfoContainer}>
-                                {this.getContentEditable(exp.title, expIndex, 'h2', 'title', this.props.isEnableChange)}
-                                {this.getContentEditable(exp.time, expIndex, 'div', 'time', this.props.isEnableChange)}
-                                {this.getContentEditable(exp.subTitle, expIndex, 'h3', 'subTitle', this.props.isEnableChange)}
+                                {this.getContentEditable(exp.title, expIndex, 'h2', 'title', this.props.isEditable)}
+                                {this.getContentEditable(exp.time, expIndex, 'div', 'time', this.props.isEditable)}
+                                {this.getContentEditable(exp.subTitle, expIndex, 'h3', 'subTitle', this.props.isEditable)}
                             </header>
                             <article className={style.descriptionContainer}>
                                 {
@@ -75,13 +75,13 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
                                         <ul>
                                             {
                                                 exp.description.map((d, i) => {
-                                                        return this.getContentEditable(d, expIndex, 'li', 'description', this.props.isEnableChange, i)
+                                                        return this.getContentEditable(d, expIndex, 'li', 'description', this.props.isEditable, i)
                                                     }
                                                 )
                                             }
                                         </ul>
                                         :
-                                        this.getContentEditable(exp.description, expIndex, 'div', 'description', this.props.isEnableChange)
+                                        this.getContentEditable(exp.description, expIndex, 'div', 'description', this.props.isEditable)
                                 }
 
                             </article>
