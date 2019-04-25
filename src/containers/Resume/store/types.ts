@@ -13,6 +13,8 @@ export interface ResumeState {
     isEditable?: boolean
 }
 
+
+
 export const UPDATE_RESUME_DATA = 'UPDATE_RESUME_DATA'
 export const SET_RESUME_DATA = 'SET_RESUME_DATA'
 export const DELETE_RESUME_SECTION = 'DELETE_RESUME_SECTION'

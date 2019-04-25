@@ -1,10 +1,10 @@
 import * as React from 'react'
 import ContentEditable from 'react-contenteditable'
-import {cloneDeep} from 'lodash'
+import {cloneDeep, isEqual} from 'lodash'
 
 const style = require('./style.css')
 
-interface IRecordListItem {
+export interface IRecordListItem {
     title: string,
     time: string,
     subTitle: string,
@@ -12,34 +12,39 @@ interface IRecordListItem {
 }
 
 interface IRecordListProps {
-    experience: IRecordListItem[],
-    submitChange: (newExperience: IRecordListItem[]) => void
+    record: IRecordListItem[],
+    submitChange: (newRecord: IRecordListItem[]) => void
     isEnableChange?: boolean
 }
 
 interface IRecordListState {
-    currentExperience: IRecordListItem[]
+    currentRecord: IRecordListItem[]
 }
 
 export class RecordList extends React.Component<IRecordListProps, IRecordListState> {
     constructor(props: Readonly<IRecordListProps>) {
         super(props)
         this.state = {
-            currentExperience: props.experience
+            currentRecord: props.record
         }
     }
 
+    componentWillReceiveProps(nextProps: Readonly<IRecordListProps>, nextContext: any): void {
+        this.setState({
+            currentRecord: nextProps.record
+        })
+    }
+
     handleChange = <T extends IRecordListItem, K extends keyof IRecordListItem>(expIndex: number, key: K, value: T[K]) => {
-        console.log(expIndex, key, value)
-        let result = cloneDeep<IRecordListItem[]>(this.state.currentExperience)
+        let result = cloneDeep<IRecordListItem[]>(this.state.currentRecord)
         result[expIndex][key] = value
         this.setState(() => {return {
-            currentExperience: result
+            currentRecord: result
         }})
     }
 
     handleDescriptionItemChange = (expIndex: number, descriptionIndex: number, newDescription: string) => {
-        let result = cloneDeep<IRecordListItem[]>(this.state.currentExperience)
+        let result = cloneDeep<IRecordListItem[]>(this.state.currentRecord)
         if(typeof result[expIndex].description === 'string') {
             throw new Error('type error')
         } else {
@@ -48,7 +53,7 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
         }
         console.log(result)
         this.setState(() => {return {
-            currentExperience: result
+            currentRecord: result
         }})
     }
 
@@ -57,7 +62,7 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
         return (
             <div className={style.experienceWrapper}>
                 {
-                    this.state.currentExperience.map((exp, expIndex) => (
+                    this.state.currentRecord.map((exp, expIndex) => (
                         <section key={`${expIndex}exp`} className={style.experienceItem}>
                             <header className={style.jobInfoContainer}>
                                 {this.getContentEditable(exp.title, expIndex, 'h2', 'title', this.props.isEnableChange)}
@@ -90,7 +95,7 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
     private getContentEditable = (value: string, expIndex: number, tagName: string, keyName: keyof IRecordListItem, isEnableChange: boolean, descriptionIndex?: number) => {
         return <ContentEditable
             html={value}
-            onBlur={() => this.props.submitChange(this.state.currentExperience)}
+            onBlur={() => this.props.submitChange(this.state.currentRecord)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if(descriptionIndex || descriptionIndex === 0) {
                     this.handleDescriptionItemChange(expIndex, descriptionIndex, e.target.value)
@@ -101,6 +106,8 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
             tagName={ tagName }
             key={descriptionIndex}
             disabled={!isEnableChange}
+            className={isEnableChange ? style.editableContent : ''}
         />
     }
 }
+

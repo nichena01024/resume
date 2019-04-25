@@ -1,5 +1,5 @@
 .experienceWrapper{
-
+    font-family: "Songti SC", serif;
 }
 
 .experienceItem {
@@ -33,4 +33,11 @@
 
 .descriptionContainer ul {
     padding-left: 1.25rem;
+}
+
+.editableContent {
+    transition: color 0.3s;
+}
+.editableContent:hover {
+    color: #888;
 }
