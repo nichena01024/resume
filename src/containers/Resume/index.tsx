@@ -7,10 +7,13 @@ import {connect} from 'react-redux'
 import {updateResumeData} from './store/testAction'
 import {AppState} from '../../store'
 import {Section} from '../../components/Section'
+import {PersonalInformation} from '../../dataTypes/PersonalInformation'
+import {ResumeHeader} from '../../components/ResumeHeader'
 
 interface IResumeContainerProps {
     education: EducationItem[],
     experience: ExperienceItem[],
+    personalInformation: PersonalInformation,
     isEditable: boolean,
     updateResumeData: typeof updateResumeData
 }
@@ -26,6 +29,15 @@ class ResumeContainer extends React.Component<IResumeContainerProps> {
         console.log(this.props)
         return (
             <React.Fragment>
+                {
+                    this.props.personalInformation.name ? (
+                        <ResumeHeader
+                            data={this.props.personalInformation}
+                            submitChange={console.log}
+                            isEditable={this.props.isEditable}
+                        />
+                    ) : ''
+                }
                 {
                     this.props.education ? (
                         <Section title={'教育背景'}>
@@ -67,7 +79,8 @@ const mapStateToProps = (state: ResumeState) => {
     return {
     education: state.educations,
     experience: state.experiences,
-    isEditable: state.isEditable
+    isEditable: state.isEditable,
+    personalInformation: state.personalInformation
 }}
 
 export const Resume = connect(
