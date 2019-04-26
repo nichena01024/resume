@@ -1,6 +1,7 @@
 import * as React from 'react'
 import ContentEditable from 'react-contenteditable'
-import {cloneDeep, isEqual} from 'lodash'
+import {cloneDeep} from 'lodash'
+import {IResumeSectionProps} from '../../dataTypes/IResumeSectionProps'
 
 const style = require('./style.css')
 
@@ -11,11 +12,7 @@ export interface IRecordListItem {
     description: string | string[]
 }
 
-interface IRecordListProps {
-    data: IRecordListItem[],
-    submitChange: (newRecord: IRecordListItem[]) => void
-    isEditable?: boolean
-}
+interface IRecordListProps extends IResumeSectionProps<IRecordListItem[]> {}
 
 interface IRecordListState {
     currentRecord: IRecordListItem[]
@@ -58,7 +55,6 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
     }
 
     render() {
-        console.log('rerender', this.state)
         return (
             <div className={style.experienceWrapper}>
                 {
@@ -100,7 +96,7 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
                 if(descriptionIndex || descriptionIndex === 0) {
                     this.handleDescriptionItemChange(expIndex, descriptionIndex, e.target.value)
                 } else {
-                this.handleChange(expIndex, keyName, e.target.value)
+                    this.handleChange(expIndex, keyName, e.target.value)
                 }
             }}
             tagName={ tagName }
