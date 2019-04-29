@@ -55,6 +55,7 @@ export const ResumeSchema: Schema = new Schema({
 })
 
 ResumeSchema.statics.findResume = async function(name: string) {
+    throw new Error('not implemented')
     const result = this.findOne().exec()
 }
 

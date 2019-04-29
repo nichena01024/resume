@@ -3,7 +3,6 @@ import {IncomingMessage, ServerResponse} from 'http'
 import {Resume} from '../models/resumeModel'
 
 export const getResume = async(request: FastifyRequest<IncomingMessage>, reply: FastifyReply<ServerResponse>) => {
-    console.log('getResume')
     try {
         return await Resume.findOne({})
     } catch(err) {
@@ -15,9 +14,7 @@ export const updateResume = async(request: FastifyRequest<IncomingMessage>, repl
     try {
         const section = request.body.section,
             data = request.body.data
-        console.log(section, data)
-       const update = await Resume.updateResume(section, data)
-        return update
+        return await Resume.updateResume(section, data)
     } catch(err) {
         throw err
     }

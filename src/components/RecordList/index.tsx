@@ -101,6 +101,7 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if(e.keyCode === 13) {
                     e.preventDefault()
+                    // @ts-ignore
                     e.target.blur()
                 }
             }}

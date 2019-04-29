@@ -6,9 +6,6 @@ import {renderToString} from 'react-dom/server'
 import {Provider} from 'react-redux'
 import * as React from 'react'
 import {Resume} from '../containers/Resume'
-import {render} from 'react-dom'
-import {createStore} from 'redux'
-import {resumeReducer} from '../containers/Resume/store/reducer'
 const proxy = require('fastify-http-proxy')
 
 import express from 'express'
