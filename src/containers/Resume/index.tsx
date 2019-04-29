@@ -1,40 +1,46 @@
 import {ResumeState} from './store/types'
-import {EducationItem} from '../../dataTypes/EducationItem'
-import {ExperienceItem} from '../../dataTypes/ExperienceItem'
+import {IEducationItem} from '../../dataTypes/IEducationItem'
+import {IExperienceItem} from '../../dataTypes/IExperienceItem'
 import * as React from 'react'
 import {IRecordListItem, RecordList} from '../../components/RecordList'
 import {connect} from 'react-redux'
-import {updateResumeData} from './store/testAction'
+import {setResumeData, updateResumeData} from './store/actions'
 import {AppState} from '../../store'
 import {Section} from '../../components/Section'
-import {PersonalInformation} from '../../dataTypes/PersonalInformation'
+import {IPersonalInformation} from '../../dataTypes/IPersonalInformation'
 import {ResumeHeader} from '../../components/ResumeHeader'
+import {ISkillItem} from '../../dataTypes/ISkillItem'
+import {PlainList} from '../../components/PlainList'
+import {IProjectItem} from '../../dataTypes/IProjectItem'
+const style = require('./style.css')
 
 interface IResumeContainerProps {
-    education: EducationItem[],
-    experience: ExperienceItem[],
-    personalInformation: PersonalInformation,
+    education: IEducationItem[],
+    experience: IExperienceItem[],
+    personalInformation: IPersonalInformation,
+    skill: ISkillItem[],
+    projects: IProjectItem[],
     isEditable: boolean,
-    updateResumeData: typeof updateResumeData
+    updateResumeData: typeof updateResumeData,
+    setResumeData: typeof setResumeData
 }
 
 
 class ResumeContainer extends React.Component<IResumeContainerProps> {
     componentDidMount(): void {
-            console.log('get resume data')
-            this.props.updateResumeData()
+        this.props.updateResumeData()
     }
 
     render() {
-        console.log(this.props)
         return (
-            <React.Fragment>
+            <article className={style.cn}>
+                <React.Fragment>
                 {
                     this.props.personalInformation.name ? (
                         <ResumeHeader
                             data={this.props.personalInformation}
-                            submitChange={console.log}
-                            isEditable={this.props.isEditable}
+                            submitChange={(newPI) => this.props.setResumeData('personalInformation', newPI)}
+                            isEditable={true}
                         />
                     ) : ''
                 }
@@ -50,40 +56,101 @@ class ResumeContainer extends React.Component<IResumeContainerProps> {
                                         description: item.description
                                     }
                                 })}
-                                submitChange={console.log}
-                                isEditable={this.props.isEditable}
+                                submitChange={(newRecord) => this.props.setResumeData('education', newRecord.map(record => {
+                                    return {
+                                        schoolName: record.title,
+                                        time: record.time,
+                                        diploma: record.subTitle,
+                                        description: record.description
+                                    }
+                                }))}
+                                isEditable={true}
+                            />
+                        </Section>) : ''
+                }
+                {
+                    this.props.skill ? (
+                        <Section title={'专业技能'}>
+                            <PlainList
+                                data={this.props.skill}
+                                submitChange={newRecord => this.props.setResumeData('skill', newRecord)}
+                                isEditable={true}
                             />
                         </Section>) : ''
                 }
                 {
                     this.props.experience ? (
                         <Section title={'工作经历'}>
-                            <RecordList data={this.props.experience.map(item => {
-                                return {
-                                    title: item.workplace,
-                                    time: item.time,
-                                    subTitle: item.job,
-                                    description: item.description
-                                }
-                            })} submitChange={console.log}
-                            isEditable={this.props.isEditable}/>
+                            <RecordList
+                                data={this.props.experience.map(item => {
+                                    return {
+                                        title: item.workplace,
+                                        time: item.time,
+                                        subTitle: item.job,
+                                        description: item.description
+                                    }
+                                })}
+                                submitChange={(newRecord) => this.props.setResumeData('experience', newRecord.map(record => {
+                                    return {
+                                        workplace: record.title,
+                                        time: record.time,
+                                        job: record.subTitle,
+                                        description: record.description
+                                    }
+                                }))}
+                                isEditable={true}/>
                         </Section>
                     ) : ''
                 }
-            </React.Fragment>
+                {
+                    this.props.projects ? (
+                        <Section title={'项目经历'}>
+                            <RecordList
+                                data={this.props.projects.map(item => {
+                                    return {
+                                        title: item.workplace,
+                                        time: item.time,
+                                        subTitle: item.projectName,
+                                        description: item.description
+                                    }
+                                })}
+                                submitChange={(newRecord) => this.props.setResumeData('project', newRecord.map(record => {
+                                    return {
+                                        workplace: record.title,
+                                        time: record.time,
+                                        projectName: record.subTitle,
+                                        description: record.description
+                                    }
+                                }))}
+                                isEditable={true}/>
+                        </Section>
+                    ) : ''
+                }
+                </React.Fragment>
+            </article>
         )
     }
 }
 
 const mapStateToProps = (state: ResumeState) => {
     return {
-    education: state.educations,
-    experience: state.experiences,
-    isEditable: state.isEditable,
-    personalInformation: state.personalInformation
-}}
+        education: state.education,
+        experience: state.experience,
+        skill: state.skill,
+        isEditable: state.isEditable,
+        personalInformation: state.personalInformation,
+        projects: state.project,
+    }
+}
 
-export const Resume = connect(
+const Resume = connect(
     mapStateToProps,
-    { updateResumeData }
+    {updateResumeData, setResumeData}
 )(ResumeContainer)
+
+// @ts-ignore
+Resume.load = (store) => {
+    return store.dispatch(updateResumeData())
+}
+
+export { Resume }

@@ -2,11 +2,13 @@ const merge = require('webpack-merge');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const baseConfig = require('./webpack.base.config');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const webpackConfig = merge(baseConfig, {
         target: 'node', // node模式，直接使用require来加载模块
         mode: 'development', // TODO: 加入mode控制
-        entry: './src/server/index.ts',
+        entry: './src/server/index.tsx',
         output: {
             filename: 'bundle.js',
             path: path.resolve(__dirname, '../build')
@@ -39,9 +41,21 @@ const webpackConfig = merge(baseConfig, {
                 },
                 {
                     test: /\.css?$/,
-                    use: ['isomorphic-style-loader', {
+                    use: [
+                        {
+                            loader:  MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '../public',
+                                hmr: true
+                            }
+                        },
+                        {
                         loader: 'css-loader',
-                        options: {modules: true}
+                        options: {
+                            importLoaders: 1,
+                            modules: true,
+                            localIdentName: '[name]_[local]_[hash:base64:5]'
+                        }
                     }]
                 },
                 {
@@ -54,7 +68,13 @@ const webpackConfig = merge(baseConfig, {
                     }
                 },
             ]
-        }
+        },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
+            path: '../public'
+        })
+    ]
     }
 );
 

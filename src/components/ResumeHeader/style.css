@@ -1,0 +1,25 @@
+.resumeHeaderContainer {
+    display: flex;
+    align-items: center;
+}
+
+.resumeHeaderContainer > div {
+    flex: 1;
+    text-align: center;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.infoContainer > h1 {
+    margin: 0.5rem auto;
+}
+.infoContainer > div {
+    flex: 1
+}
+.sideNoteContainer {
+
+}

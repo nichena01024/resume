@@ -48,7 +48,6 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
             let target = result[expIndex].description as string[]
             target[descriptionIndex] = newDescription
         }
-        console.log(result)
         this.setState(() => {return {
             currentRecord: result
         }})
@@ -56,11 +55,11 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
 
     render() {
         return (
-            <div className={style.experienceWrapper}>
+            <div className={style.recordListWrapper}>
                 {
                     this.state.currentRecord.map((exp, expIndex) => (
-                        <section key={`${expIndex}exp`} className={style.experienceItem}>
-                            <header className={style.jobInfoContainer}>
+                        <section key={`${expIndex}exp`} className={style.recordListItem}>
+                            <header className={style.infoContainer}>
                                 {this.getContentEditable(exp.title, expIndex, 'h2', 'title', this.props.isEditable)}
                                 {this.getContentEditable(exp.time, expIndex, 'div', 'time', this.props.isEditable)}
                                 {this.getContentEditable(exp.subTitle, expIndex, 'h3', 'subTitle', this.props.isEditable)}
@@ -97,6 +96,12 @@ export class RecordList extends React.Component<IRecordListProps, IRecordListSta
                     this.handleDescriptionItemChange(expIndex, descriptionIndex, e.target.value)
                 } else {
                     this.handleChange(expIndex, keyName, e.target.value)
+                }
+            }}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                if(e.keyCode === 13) {
+                    e.preventDefault()
+                    e.target.blur()
                 }
             }}
             tagName={ tagName }

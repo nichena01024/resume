@@ -1,4 +1,4 @@
-export interface PersonalInformation {
+export interface IPersonalInformation {
     name: string,
     phone: string,
     email: string,

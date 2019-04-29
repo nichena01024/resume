@@ -4,7 +4,7 @@ const baseConfig = require('./webpack.base.config');
 
 const webpackConfig = merge(baseConfig, {
     mode: 'development',    // TODO：自动更改
-    entry: './src/client/index.ts',
+    entry: './src/client/index.tsx',
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, '../public')

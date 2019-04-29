@@ -1,15 +1,11 @@
-import {SkillItem} from '../../../dataTypes/SkillItem'
-import {PersonalInformation} from '../../../dataTypes/PersonalInformation'
-import {EducationItem} from '../../../dataTypes/EducationItem'
-import {ExperienceItem} from '../../../dataTypes/ExperienceItem'
-import {ProjectItem} from '../../../dataTypes/ProjectItem'
+import {ISkillItem} from '../../../dataTypes/ISkillItem'
+import {IPersonalInformation} from '../../../dataTypes/IPersonalInformation'
+import {IEducationItem} from '../../../dataTypes/IEducationItem'
+import {IExperienceItem} from '../../../dataTypes/IExperienceItem'
+import {IProjectItem} from '../../../dataTypes/IProjectItem'
+import {IResume} from '../../../dataTypes/IResume'
 
-export interface ResumeState {
-    personalInformation: Partial<PersonalInformation>,
-    educations: EducationItem[],
-    skills: SkillItem[],
-    experiences: ExperienceItem[],
-    projects: ProjectItem[],
+export interface ResumeState extends IResume{
     isEditable?: boolean
 }
 

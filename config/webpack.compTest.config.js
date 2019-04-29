@@ -46,7 +46,7 @@ const webpackConfig = merge(baseConfig, {
     plugins: [
         new HTMLWebpackPlugin({
             template: "./config/template.html",
-            filename: "index.html"
+            filename: "index.tsx.tsx.html"
         })
     ]
 });

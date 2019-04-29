@@ -1,6 +1,6 @@
-export interface ProjectItem {
+export interface IExperienceItem {
     workplace: string,
     time: string,
-    projectName: string,
+    job: string,
     description: string | string[]
 }

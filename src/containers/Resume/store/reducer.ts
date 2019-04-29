@@ -2,10 +2,10 @@ import {ResumeActionTypes, ResumeState} from './types'
 
 const initState: ResumeState = {
     personalInformation: {},
-    educations: [],
-    experiences: [],
-    skills: [],
-    projects: []
+    education: [],
+    experience: [],
+    skill: [],
+    project: []
 }
 
 // @ts-ignore
@@ -23,7 +23,7 @@ export function resumeReducer(state = initState, action: ResumeActionTypes): Res
         case 'DELETE_RESUME_SECTION':
             return {
                 ...state,
-                [action.section]: action.section === 'educations' ? {} : []
+                [action.section]: action.section === 'education' ? {} : []
             }
         case 'CHANGE_EDITABLE_STATUS':
             return {

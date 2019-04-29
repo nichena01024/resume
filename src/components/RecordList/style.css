@@ -1,27 +1,27 @@
-.experienceWrapper{
+.recordListWrapper{
     font-family: "Songti SC", serif;
 }
 
-.experienceItem {
+.recordListItem {
 
 }
 
-.jobInfoContainer {
+.infoContainer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
 /*jobinfo字体,排印设置*/
-.jobInfoContainer h2 {
+.infoContainer h2 {
     flex: 1;
     margin: 0.5rem 0;
 }
-.jobInfoContainer > div {
+.infoContainer > div {
 
 }
 
-.jobInfoContainer h3 {
+.infoContainer h3 {
     width: 100%;
     margin: 0;
     font-size: 1rem;

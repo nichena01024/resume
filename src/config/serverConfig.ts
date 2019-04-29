@@ -1,1 +1,1 @@
-export const backendServerUrl = 'http://localhost:6666'
+export const backendServerUrl = 'http://localhost:7654'
